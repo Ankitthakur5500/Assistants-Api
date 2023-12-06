@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react'
-import {GetAssistant,GetThread,CreateMessage} from '../services/url'
+import {GetAssistant,GetThread,CreateMessage,Run,RunStatus} from '../services/url'
  
 export default function Home() {
   const [data,setData] = useState("");
@@ -8,13 +8,20 @@ export default function Home() {
 
   async function handleClick(){
     const assistantId = await GetAssistant();
-    console.log("*",assistantId.assistant.id);
+    console.log("AssistantID-->",assistantId.assistant.id);
+    console.log("AssistantName-->",assistantId.assistant.name);
     const threadId = await GetThread();
-    // console.log("*",threadId.thread.id);
     const id = threadId.thread.id
-    console.log("*",id);
+    console.log("ThraedId-->",id);
     const message = await CreateMessage(id,data);
-    console.log("*",message);
+    console.log("MessageId-->",message.id);
+    // console.log("MessageContent-->",message.content);
+    const run = await Run(assistantId,id);
+    const runID = run.id;
+    console.log("RunId-->",runID);
+    console.log("RunId-->",run.status);
+    const runstatus = await RunStatus(id,runID);
+    console.log("page-->",runstatus);
   }
 
   return (

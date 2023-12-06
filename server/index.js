@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-const openai = new OpenAI();
+const openai = new OpenAI({apiKey:"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"});
 
 // const assistant = await openai.beta.assistants.create({
 //     name: "Math Tutor",
@@ -11,17 +11,17 @@ const openai = new OpenAI();
 
 //  console.log(assistant);
 
-//const thread = await openai.beta.threads.create();
+// const thread = await openai.beta.threads.create();
 
-//console.log(thread);
+// console.log(thread);
 
-const message = await openai.beta.threads.messages.create(thread.id, {
-    role: "user",
-    content: "what is 2+2=?",
-});
+// const message = await openai.beta.threads.messages.create(thread.id, {
+//     role: "user",
+//     content: "what is 2+2=?",
+// });
 
-console.log(message);
-console.log(message.content);
+// console.log(message);
+// console.log(message.content);
 
 // const run = await openai.beta.threads.runs.create(thread.id, {
 //     assistant_id: assistant.id,
@@ -31,23 +31,23 @@ console.log(message.content);
 // console.log(run);
 // console.log(run.status);
 
-// const checkStatusAndPrintMessages = async (threadId, runId) => {
-//     let runStatus = await openai.beta.threads.runs.retrieve(threadId, runId);
-//     if(runStatus.status === "completed"){
-//         let messages = await openai.beta.threads.messages.list(threadId);
-//         messages.data.forEach((msg) => {
-//             const role = msg.role;
-//             const content = msg.content[0].text.value; 
-//             console.log(
-//                 `${role.charAt(0).toUpperCase() + role.slice(1)}: ${content}`
-//             );
-//         });
-//     } else {
-//         console.log("Run is not completed yet.");
-//     }  
-// };
+const checkStatusAndPrintMessages = async (threadId, runId) => {
+    let runStatus = await openai.beta.threads.runs.retrieve(threadId, runId);
+    if(runStatus.status === "completed"){
+        let messages = await openai.beta.threads.messages.list(threadId);
+        messages.data.forEach((msg) => {
+            const role = msg.role;
+            const content = msg.content[0].text.value; 
+            console.log(
+                `${role.charAt(0).toUpperCase() + role.slice(1)}: ${content}`
+            );
+        });
+    } else {
+        console.log("Run is not completed yet.");
+    }  
+};
 
-// setTimeout(() => {
-//     checkStatusAndPrintMessages(thread.id, run.id)
-// }, 50000 );
+setTimeout(() => {
+    checkStatusAndPrintMessages(thread.id, run.id)
+}, 50000 );
 
