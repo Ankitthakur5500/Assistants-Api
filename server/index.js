@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-const openai = new OpenAI({apiKey:"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"});
+const openai = new OpenAI();
 
 // const assistant = await openai.beta.assistants.create({
 //     name: "Math Tutor",
